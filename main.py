@@ -9,6 +9,7 @@ class Application(tk.Frame):
         self.files = glob("../pics/*.jpg")
         self.index = 0
         self.img = ImageTk.PhotoImage(Image.open(self.files[self.index]))
+        self.master = master
         tk.Frame.__init__(self, master)
         self.pack()
         self.createWidgets()
@@ -17,12 +18,8 @@ class Application(tk.Frame):
         self.label_image = tk.Label(self)
         self.label_image['image'] = self.img
         self.label_image.pack()
-        self.f = tk.Frame()
-        self.f.pack()
-        self.btnPrev = tk.Button(self.f, text='上一张', command=self.prev)
-        self.btnPrev.pack(side=tk.LEFT)
-        self.btnNext = tk.Button(self.f, text='下一张', command=self.next)
-        self.btnNext.pack(side=tk.LEFT)
+        self.master.bind('<Left>', lambda event: self.prev())
+        self.master.bind('<Right>', lambda event: self.next())
 
     def prev(self):
         self.showfile(-1)
